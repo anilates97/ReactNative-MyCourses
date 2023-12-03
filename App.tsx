@@ -1,20 +1,31 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { useState } from "react";
+import { Button, StyleSheet, Text, View } from "react-native";
+import CourseInput from "./components/CourseInput";
 
 export default function App() {
+  const [modalIsVisible, setModalIsVisible] = useState(false);
+
+  function startModal() {
+    setModalIsVisible(true);
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <StatusBar style="light" />
+      <View style={styles.container}>
+        <Button title="Add course" color="red" onPress={startModal} />
+        <CourseInput visible={modalIsVisible} />
+      </View>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    paddingTop: 50,
+    paddingHorizontal: 20,
   },
 });
