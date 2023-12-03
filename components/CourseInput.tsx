@@ -7,13 +7,25 @@ import {
   TextInput,
   Button,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 
 type CourseInputProps = {
   visible: boolean;
+  onAddCourse: (text: string) => void;
+  onCancel: () => void;
 };
 
-export default function CourseInput({ visible }: CourseInputProps) {
+export default function CourseInput({
+  visible,
+  onAddCourse,
+  onCancel,
+}: CourseInputProps) {
+  const [enteredCourseText, setEnteredCourseText] = useState("");
+  function handleAddCourse() {
+    onAddCourse(enteredCourseText);
+    setEnteredCourseText("");
+  }
+
   return (
     <Modal animationType="slide" visible={visible}>
       <View style={styles.inputContainer}>
@@ -21,13 +33,18 @@ export default function CourseInput({ visible }: CourseInputProps) {
           style={styles.image}
           source={require("../assets/images/cblogo.png")}
         />
-        <TextInput style={styles.textInput} placeholder="Add new course" />
+        <TextInput
+          value={enteredCourseText}
+          style={styles.textInput}
+          placeholder="Add new course"
+          onChangeText={(text) => setEnteredCourseText(text)}
+        />
         <View style={styles.buttonContainer}>
           <View style={styles.button}>
-            <Button title="Cancel" color="red" />
+            <Button title="Cancel" color="red" onPress={onCancel} />
           </View>
           <View style={styles.button}>
-            <Button title="Add" color="#333" />
+            <Button title="Add" color="#333" onPress={handleAddCourse} />
           </View>
         </View>
       </View>
